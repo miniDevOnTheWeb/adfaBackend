@@ -24,6 +24,9 @@ public class Team {
     @Column(name = "city")
     private String city;
 
+	@Column(name = "points")
+	private Integer points;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "country")
     private Category category;

@@ -3,6 +3,7 @@ package com.adfa.adfa.web.controller;
 import com.adfa.adfa.model.dto.StadiumRequest;
 import com.adfa.adfa.model.entity.Stadium;
 import com.adfa.adfa.service.StadiumService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class StadiumController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createStadium(@RequestBody StadiumRequest request) {
+    public ResponseEntity<?> createStadium(@Valid @RequestBody StadiumRequest request) {
         Stadium createdStadium = stadiumService.createStadium(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
                 "stadium", createdStadium,
@@ -46,7 +47,7 @@ public class StadiumController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteStadium(@PathVariable UUID id) {
         stadiumService.deleteStadium(id);
-        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of(
                 "message", "Estadio eliminado."
         ));
     }

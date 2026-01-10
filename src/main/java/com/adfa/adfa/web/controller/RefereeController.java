@@ -3,6 +3,7 @@ package com.adfa.adfa.web.controller;
 import com.adfa.adfa.model.dto.RefereeRequest;
 import com.adfa.adfa.model.entity.Referee;
 import com.adfa.adfa.service.RefereeService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +44,7 @@ public class RefereeController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createReferee(@RequestBody RefereeRequest request) {
+    public ResponseEntity<?> createReferee(@Valid @RequestBody RefereeRequest request) {
         Referee createdReferee = refereeService.createReferee(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
                 "referee", createdReferee,

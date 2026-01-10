@@ -12,6 +12,7 @@ import com.adfa.adfa.model.entity.Team;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -62,8 +63,23 @@ public class MatchService {
     public Match setScore (ScoreRequest request) {
         Match match = matchRepository.findById(request.getMatchId()).orElseThrow(() -> new RuntimeException("Partido no encontrado"));
 
+		Integer scoreLocal = request.getScoreLocal();
+		Integer scoreVisitor = request.getScoreVisitor();
+
         match.setScoreLocal(request.getScoreLocal());
         match.setScoreVisitor(request.getScoreVisitor());
+
+		Team visitor = match.getVisitor();
+		Team local = match.getLocal();
+
+		if (scoreLocal > scoreVisitor) {
+			local.setPoints(local.getPoints() + 3);
+		} else if (scoreVisitor > scoreLocal) {
+			visitor.setPoints(visitor.getPoints() + 3);
+		} else {
+			local.setPoints(local.getPoints() + 1);
+			visitor.setPoints(visitor.getPoints() + 1);
+		}
 
         return matchRepository.save(match);
     }

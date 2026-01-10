@@ -2,6 +2,7 @@ package com.adfa.adfa.service;
 
 import com.adfa.adfa.data.repository.StadiumRepository;
 import com.adfa.adfa.data.repository.TeamRepository;
+import com.adfa.adfa.enums.Category;
 import com.adfa.adfa.model.dto.TeamRequest;
 import com.adfa.adfa.model.entity.Stadium;
 import com.adfa.adfa.model.entity.Team;
@@ -28,6 +29,7 @@ public class TeamService {
         team.setCity(request.getCity());
         team.setCategory(request.getCategory());
         team.setStadium(stadium);
+		team.setPoints(0);
         return teamRepository.save(team);
     }
 
@@ -46,4 +48,8 @@ public class TeamService {
     public List<Team> getAllTeams() {
         return teamRepository.findAll();
     }
+
+	public List<Team> getPositionTable (Category category) {
+		return teamRepository.getByCategoryOrderByPointsDesc(category);
+	}
 }

@@ -4,6 +4,7 @@ import com.adfa.adfa.model.dto.MatchRequest;
 import com.adfa.adfa.model.dto.ScoreRequest;
 import com.adfa.adfa.model.entity.Match;
 import com.adfa.adfa.service.MatchService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class MatchController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createMatches(@RequestBody MatchRequest request) {
+    public ResponseEntity<?> createMatches(@Valid @RequestBody MatchRequest request) {
         Match match = matchService.createMatch(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
                 "message", "Partido programado exitosamente."
@@ -44,7 +45,7 @@ public class MatchController {
     }
 
     @PutMapping("/setScore")
-    public ResponseEntity<?> setScore(@RequestBody ScoreRequest request) {
+    public ResponseEntity<?> setScore(@Valid @RequestBody ScoreRequest request) {
         Match match = matchService.setScore(request);
         return ResponseEntity.status(HttpStatus.OK).body(Map.of(
                 "message", "Marcador actualizado exitosamente.",
