@@ -50,6 +50,7 @@ public class SecurityConfig {
                 })
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/auth/**").permitAll();
+                    auth.requestMatchers("/auth/me").authenticated();
                     auth.requestMatchers(
                             HttpMethod.POST,
                             "/stadiums/**", "/teams/**", "/referees/**", "/matches/**"

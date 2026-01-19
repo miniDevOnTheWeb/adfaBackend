@@ -15,9 +15,14 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User register (User user) {
+    public UserEntity register (UserEntity user) {
         // register logic
         return user;
+    }
+
+    public UserEntity findByUsername (String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     public List<UserEntity> getAllUsers() {

@@ -27,6 +27,7 @@ public class TeamService {
         Team team = new Team();
         team.setName(request.getName());
         team.setCity(request.getCity());
+        System.out.println(request.getCategory());
         team.setCategory(request.getCategory());
         team.setStadium(stadium);
 		team.setPoints(0);

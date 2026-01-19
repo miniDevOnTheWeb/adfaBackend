@@ -1,5 +1,6 @@
 package com.adfa.adfa.model.dto;
 
+import com.adfa.adfa.enums.Category;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,4 +27,7 @@ public class MatchRequest {
     private UUID refereeId;
 	@NotNull(message = "La hora del partido es obligatorio")
     private LocalTime hour;
+    @NotNull(message = "La jornada es obligatoria")
+    private Integer matchDay;
+    private Category category;
 }

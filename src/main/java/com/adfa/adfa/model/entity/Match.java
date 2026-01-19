@@ -1,5 +1,6 @@
 package com.adfa.adfa.model.entity;
 
+import com.adfa.adfa.enums.Category;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
 
-@Entity(name = "match")
+@Entity
 @Table(name = "matches")
 @NoArgsConstructor
 @Getter
@@ -46,4 +47,10 @@ public class Match {
 
     @Column(name = "hour")
     private LocalTime hour;
+
+    @Column(name = "match_day")
+    private Integer matchDay;
+
+    @Column(name = "category")
+    private Category category;
 }

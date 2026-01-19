@@ -1,5 +1,6 @@
 package com.adfa.adfa.web.controller;
 
+import com.adfa.adfa.enums.Category;
 import com.adfa.adfa.model.dto.MatchRequest;
 import com.adfa.adfa.model.dto.ScoreRequest;
 import com.adfa.adfa.model.entity.Match;
@@ -25,6 +26,20 @@ public class MatchController {
     public ResponseEntity<?> getAllMatches() {
         return ResponseEntity.status(HttpStatus.OK).body(Map.of(
                 "matches", matchService.getAllMatches()
+        ));
+    }
+
+    @GetMapping("/byCategory/{category}")
+    public ResponseEntity<?> getAllMatchesByCategory (@PathVariable Category category) {
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of(
+                "matches", matchService.getAllMatchesByCategory(category)
+        ));
+    }
+
+    @GetMapping("/byTeam/{teamId}")
+    public ResponseEntity<?> getAllMatchesByTeam(@PathVariable UUID teamId) {
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of(
+                "matches", matchService.getAllMatchesByTeam(teamId)
         ));
     }
 

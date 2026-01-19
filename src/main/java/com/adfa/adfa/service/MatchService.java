@@ -3,6 +3,7 @@ package com.adfa.adfa.service;
 import com.adfa.adfa.data.repository.MatchRepository;
 import com.adfa.adfa.data.repository.StadiumRepository;
 import com.adfa.adfa.data.repository.TeamRepository;
+import com.adfa.adfa.enums.Category;
 import com.adfa.adfa.model.dto.MatchRequest;
 import com.adfa.adfa.model.dto.ScoreRequest;
 import com.adfa.adfa.model.entity.Match;
@@ -32,6 +33,11 @@ public class MatchService {
     public Match createMatch (MatchRequest request) {
         Team local = teamService.getTeamById(request.getLocalId());
         Team visitor = teamService.getTeamById(request.getVisitorId());
+
+        if (local.getCategory() != visitor.getCategory()) {
+            throw new RuntimeException("Los equipos deben ser de la misma categoria");
+        }
+
         Stadium stadium = stadiumService.getStadiumById(request.getStadiumId());
         Referee referee = refereeService.getRefereeById(request.getRefereeId());
 
@@ -43,6 +49,8 @@ public class MatchService {
         match.setScoreLocal(request.getScoreLocal());
         match.setScoreVisitor(request.getScoreVisitor());
         match.setReferee(referee);
+        match.setCategory(local.getCategory());
+        match.setMatchDay(request.getMatchDay());
         match.setHour(request.getHour());
 
         return matchRepository.save(match);
@@ -82,5 +90,13 @@ public class MatchService {
 		}
 
         return matchRepository.save(match);
+    }
+
+    public List<Match> getAllMatchesByCategory (Category category) {
+        return matchRepository.findByCategory(category);
+    }
+
+    public List<Match> getAllMatchesByTeam (UUID teamId) {
+        return matchRepository.findByTeamId(teamId);
     }
 }
